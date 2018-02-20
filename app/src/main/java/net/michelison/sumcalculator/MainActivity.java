@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
     private TextView sumOf;
     private Button sumButton;
 
-    //define shared preferences object
+    //define shared preferences object onPause
     private SharedPreferences savedValues;
 
     //variables to be saved
@@ -54,6 +54,25 @@ public class MainActivity extends Activity {
 
         sumOf.setText(String.valueOf(sum));
     } */
+
+    @Override
+    public void onPause(){
+
+        // save the values for he onPause
+        SharedPreferences.Editor editor = savedValues.edit();
+        editor.putInt("num1", num1);
+        editor.putInt("num2", num2);
+        editor.commit();
+        super.onPause();
+
+    }
+
+    public void onResume(){
+        //get the instance variables
+        super.onResume();
+        num1 = savedValues.getInt("num1", 0);
+        num2 = savedValues.getInt("num2", 0);
+    }
 
     public void sendMessage(View v) {
         // The intent has the Sending activity and the recieving activity as parameters
